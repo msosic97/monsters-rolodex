@@ -11,6 +11,7 @@ class App extends Component {
       monsters: [],
       searchField: ''
     };
+    // this.handleChange = this.handleChange.bind(this);  --> using for own NOT ARROW function
   }
 
   componentDidMount() {
@@ -18,6 +19,9 @@ class App extends Component {
       .then(response => response.json()).then(users => this.setState({ monsters: users }));
   }
 
+  handleChange = (e) => {
+    this.setState({searchField: e.target.value});
+  }
   render() { 
     const { monsters, searchField } = this.state;
     const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase()));
@@ -25,7 +29,7 @@ class App extends Component {
       <div className="App">
           <SearchBox 
               placeholder='search monsters'
-              handleChange= {e => this.setState({searchField: e.target.value})} 
+              handleChange={this.handleChange}
           />
           <CardList monsters={filteredMonsters} />
 
